@@ -20,11 +20,10 @@ qemu-system-mipsel \
   -hda debian_wheezy_mipsel_standard.qcow2 \ 
   -append "root=/dev/sda1 console=tty0" \ 
   -net nic \ 
-  -nographic \ 
   -net user,hostfwd=tcp::7777-:22
 ```
 
-You can remove the -nographic option if you want to see QEMU booting.
+You can add the -nographic option if you don't want to see QEMU in a GUI.
 
 The root password is 'root'. QEMU is doing port fowarding so we should be able to use local port 7777 to connect to our image. Confirm you can ssh into the QEMU image with
 ```
