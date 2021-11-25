@@ -30,20 +30,26 @@ The root password is 'root'. QEMU is doing port fowarding so we should be able t
 ssh -p 7777 root@localhost
 ```
 
-Untar the firmware image in root's home directory.
+scp the firmware from your computer to your QEMU image:
+
+```
+scp -P 7777 InfoSect-Hardware-CTF-3-Firmware.tgz root@localhost:
+```
+
+Now back in your ssh session, untar the firmware image in the /root (the default on login) directory.
 
 ```
 tar xzvf InfoSect-Hardware-CTF-3-Firmware.tgz
 ```
 
-Now create some special device files to establish a proper environment.
+Still in ssh, create some special device files to establish a proper environment.
 
 ```
 mknod ./root-ramips/dev/zero c 1 3
 mknod ./root-ramips/dev/null c 1 8
 ```
 
-Now run the HTTPd daemon.
+Now run the HTTPd daemon in your ssh session.
 
 ```
 chroot ./root-ramrips /usr/bin/lighttpd-custom -f /lighttpd.conf
