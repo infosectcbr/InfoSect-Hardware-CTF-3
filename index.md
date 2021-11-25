@@ -71,7 +71,7 @@ You should see that lighttpd-custom is listening on 2 ports. One of these ports 
 
 You might have noticed some leaked lighttpd (HTTPd) source code on the system. It makes reference to a backdoor that has been inserted into the custom web server. To trigger the backdoor, you need to request /index.html from the server and use the correct HTTP header after the GET request. Look closely at the output of the webserver for the flag.
 
-## Flag 4 - Buffer Overflows
+## Flag 4 - Buffer Overflow
 
 There is a buffer overflow in the lighttpd custom webserver when it processes another HTTP header. The overflow overwrites an admin variable that needs to be set to a specific value for the flag to be revealed.
 
