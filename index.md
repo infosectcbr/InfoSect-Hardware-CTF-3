@@ -52,10 +52,10 @@ mknod ./root-ramips/dev/null c 1 8
 Now run the HTTPd daemon in your ssh session.
 
 ```
-chroot ./root-ramrips /usr/bin/lighttpd-custom -f /lighttpd.conf
+chroot ./root-ramips /usr/bin/lighttpd-custom -f /lighttpd.conf
 ```
 
-Now look in the ./root-ramrips directories to find the FLAG file.
+Now look in the ./root-ramips directories to find the FLAG file.
 
 ## Flag 2 - Ports Incoming
 
@@ -88,5 +88,5 @@ You will analyse the vftpd-custom binary in Ghidra. There is a backdoor FTP comm
 To emulate the vsftpd-custom binary, use:
 
 ```
-chroot ./ram-rips/ /usr/bin/vsftpd-custom
+chroot ./root-ramips/ /usr/bin/vsftpd-custom
 ```
