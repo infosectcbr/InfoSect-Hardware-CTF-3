@@ -13,7 +13,8 @@ If you do not have a router in physical posession, you will need to emulate the 
 Download the following QEMU images from (https://people.debian.org/~aurel32/qemu/mipsel/)
 
 
-```qemu-system-mipsel \ 
+```
+qemu-system-mipsel \ 
   -M malta \ 
   -kernel vmlinux-3.2.0-4-4kc-malta \ 
   -hda debian_wheezy_mipsel_standard.qcow2 \ 
@@ -26,21 +27,28 @@ Download the following QEMU images from (https://people.debian.org/~aurel32/qemu
 You can remove the -nographic option if you want to see QEMU booting.
 
 The root password is 'root'. QEMU is doing port fowarding so we should be able to use local port 7777 to connect to our image. Confirm you can ssh into the QEMU image with
-```ssh -p 7777 root@localhost`
+```
+ssh -p 7777 root@localhost
+```
 
 Untar the firmware image in root's home directory.
 
-```tar xzvf InfoSect-Hardware-CTF-3-Firmware.tgz```
+```
+tar xzvf InfoSect-Hardware-CTF-3-Firmware.tgz
+```
 
 Now create some special device files to establish a proper environment.
 
-```mknod ./root-ramips/dev/zero c 1 3
+```
+mknod ./root-ramips/dev/zero c 1 3
 mknod ./root-ramips/dev/null c 1 8
 ```
 
 Now run the HTTPd daemon.
 
-```chroot ./root-ramrips /usr/bin/lighttpd-custom -f /lighttpd.conf
+```
+chroot ./root-ramrips /usr/bin/lighttpd-custom -f /lighttpd.conf
+```
 
 Now look in the ./root-ramrips directories to find the FLAG file.
 
@@ -48,7 +56,9 @@ Now look in the ./root-ramrips directories to find the FLAG file.
 
 On the device (or inside QEMU on the shell), run the command:
 
-```netstat -plant```
+```
+netstat -plant
+```
 
 You should see that lighttpd-custom is listening on 2 ports. One of these ports has a webserver, the other is serving a flag.
 
@@ -72,4 +82,6 @@ You will analyse the vftpd-custom binary in Ghidra. There is a backdoor FTP comm
 
 To emulate the vsftpd-custom binary, use:
 
-```chroot ./ram-rips/ /usr/bin/vsftpd-custom```
+```
+chroot ./ram-rips/ /usr/bin/vsftpd-custom
+```
