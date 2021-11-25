@@ -10,8 +10,9 @@ If you do not have a router in physical possession, you will need to emulate the
 
 ### Firmware Emulation
 
-Download the following QEMU images from (https://people.debian.org/~aurel32/qemu/mipsel/)
+Download the QEMU images from (https://people.debian.org/~aurel32/qemu/mipsel/)
 
+Then from Linux, install QEMU and run:
 
 ```
 qemu-system-mipsel \ 
