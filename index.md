@@ -1,37 +1,75 @@
-## Welcome to GitHub Pages
+# Hardware CTF 3
 
-You can use the [editor on GitHub](https://github.com/infosectcbr/InfoSect-Hardware-CTF-3/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+This challenge will have you find and exploit bugs in a SOHO router.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Flag 1 - Physical Access
 
-### Markdown
+Gain physical access to the UART on the router and establish a serial console. Look around the filesystem for an obvious file containing the flag.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+If you do not have a router in physical posession, you will need to emulate the firmware as described in the next section.
 
-```markdown
-Syntax highlighted code block
+## Firmware Emulation
 
-# Header 1
-## Header 2
-### Header 3
+Download the following QEMU images from (https://people.debian.org/~aurel32/qemu/mipsel/)
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```qemu-system-mipsel \ 
+  -M malta \ 
+  -kernel vmlinux-3.2.0-4-4kc-malta \ 
+  -hda debian_wheezy_mipsel_standard.qcow2 \ 
+  -append "root=/dev/sda1 console=tty0" \ 
+  -net nic \ 
+  -nographic \ 
+  -net user,hostfwd=tcp::7777-:22
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+You can remove the -nographic option if you want to see QEMU booting.
 
-### Jekyll Themes
+The root password is 'root'. QEMU is doing port fowarding so we should be able to use local port 7777 to connect to our image. Confirm you can ssh into the QEMU image with
+```ssh -p 7777 root@localhost`
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/infosectcbr/InfoSect-Hardware-CTF-3/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Untar the firmware image in root's home directory.
 
-### Support or Contact
+```tar xzvf InfoSect-Hardware-CTF-3-Firmware.tgz```
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Now create some special device files to establish a proper environment.
+
+```mknod ./root-ramips/dev/zero c 1 3
+mknod ./root-ramips/dev/null c 1 8
+```
+
+Now run the HTTPd daemon.
+
+```chroot ./root-ramrips /usr/bin/lighttpd-custom -f /lighttpd.conf
+
+Now look in the ./root-ramrips directories to find the FLAG file.
+
+## Flag 2 - Ports Incoming
+
+On the device (or inside QEMU on the shell), run the command:
+
+```netstat -plant```
+
+You should see that lighttpd-custom is listening on 2 ports. One of these ports has a webserver, the other is serving a flag.
+
+### Flag 3 - HTTP Headers
+
+You might have noticed some leaked lighttpd (HTTPd) source code on the system. It makes reference to a backdoor that has been inserted into the custom web server. To trigger the backdoor, you need to request a file from the server and use the correct HTTP header. Look closely at the output of the webserver for the flag.
+
+### Flag 4 - Buffer Overflows
+
+There is a buffer overflow in the lighttpd custom webserver when it processes another HTTP header. The overflow overwrites an admin variable that needs to be set to a specific value for the flag to be revealed.
+
+You will need to copy the vsftpd-custom binary off the router to a laptop so you can analyse it. If you have physical access to the router, try copying it to a USB stick inserted into the router. Most routers will need to support the filesystem of the USB stick. If you look at /proc/filesystems on the router, you can see which filesystems it supports. You might need to use mkfs.vfat to create the filesystem if you are doing it on command line.
+
+You might want to look at the firmware in Ghidra and see if you can identify any functions that are named similar to do_buffer_overflow. Look at the code and the XREFS that use this function. You'll be able to figure out which HTTP header has the buffer overflow.
+
+The overflow is in the data section of the HTTP header. It is between 128 and 256 bytes in size. If you trigger the buffer overflow, the web server will tell you if you constructed the buffer correctly. Construct the correct buffer and get the flag.
+
+### Flag 5 - FTP
+
+You will analyse the vftpd-custom binary in Ghidra. There is a backdoor FTP command that will reveal the flag. Look for strings such as USER and PASS. Find XREFS to them and identify the command parsing code. Then look for command that is suspicious. The backdoor command will be preauthentication.
+
+To emulate the vsftpd-custom binary, use:
+
+```chroot ./ram-rips/ /usr/bin/vsftpd-custom```
