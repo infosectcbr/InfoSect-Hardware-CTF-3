@@ -4,9 +4,9 @@ This challenge will have you find and exploit bugs in a SOHO router.
 
 ## Flag 1 - Physical Access
 
-Gain physical access to the UART on the router and establish a serial console. Look around the filesystem for an obvious file containing the flag.
+Gain physical access to the UART on the router and establish a serial console. Look around the filesystem for an obvious file containing the flag. Look at (https://infosectcbr.github.io/InfoSect-Hardware-CTF-1/) Level 1 for details on using UART.
 
-If you do not have a router in physical posession, you will need to emulate the firmware as described in the next section.
+If you do not have a router in physical possession, you will need to emulate the firmware as described in the next section.
 
 ### Firmware Emulation
 
