@@ -85,6 +85,8 @@ Look for strings such as USER and PASS, which are standard FTP commands, in Ghid
 
 Another tip is to try downloading the vsftpd source code to see what the command parsing code looks like, and to identify any unusual changes.
 
+One final tip is to simply run the strings command on the binary and see if anything in the command strings looks suspicious.
+
 To emulate the vsftpd-custom binary, use:
 
 ```
