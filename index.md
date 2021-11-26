@@ -84,7 +84,7 @@ You will analyse the vftpd-custom binary in Ghidra. There is a backdoor FTP comm
 To emulate the vsftpd-custom binary, use:
 
 ```
-chroot ./root-ramips/ /usr/bin/vsftpd-custom
+chroot ./root-ramips /usr/bin/vsftpd-custom
 ```
 
 Note that if you use an FTP client in your QEMU image, it won't be able to recognise the backoor commands since it is not part of the FTP specification. However, if you netcat or telnet to the FTP port, you can send raw commands to solve this challenge.
