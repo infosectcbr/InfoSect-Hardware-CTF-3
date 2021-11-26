@@ -43,13 +43,6 @@ Now back in your ssh session, untar the firmware image in the /root (the default
 tar xzvf InfoSect-Hardware-CTF-3-Firmware.tgz
 ```
 
-Still in ssh, create some special device files to establish a proper environment.
-
-```
-mknod ./root-ramips/dev/zero c 1 3
-mknod ./root-ramips/dev/null c 1 8
-```
-
 Now run the HTTPd daemon in your ssh session.
 
 ```
@@ -72,6 +65,8 @@ You should see that lighttpd-custom is listening on 2 ports. One of these ports 
 
 You might have noticed some leaked lighttpd (HTTPd) source code on the system. It makes reference to a backdoor that has been inserted into the custom web server. To trigger the backdoor, you need to request /index.html from the server and use the correct HTTP header after the GET request. Look closely at the output of the webserver for the flag.
 
+In your QEMU image, you have tools such as netcat (nc), telnet, python, bash, and wget available. These tools are enough to solve the challenge. It is recommended to use hand crafted HTTP GET requests for these challenges.
+
 ## Flag 4 - Buffer Overflow
 
 There is a buffer overflow in the lighttpd custom webserver when it processes another HTTP header. The overflow overwrites an admin variable that needs to be set to a specific value for the flag to be revealed.
@@ -91,3 +86,5 @@ To emulate the vsftpd-custom binary, use:
 ```
 chroot ./root-ramips/ /usr/bin/vsftpd-custom
 ```
+
+Note that if you use an FTP client in your QEMU image, it won't be able to recognise the backoor commands since it is not part of the FTP specification. However, if you netcat or telnet to the FTP port, you can send raw commands to solve this challenge.
