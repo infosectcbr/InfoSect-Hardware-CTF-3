@@ -10,7 +10,9 @@ If you do not have a router in physical possession, you will need to emulate the
 
 ### Firmware Emulation
 
-Download the QEMU images from [https://people.debian.org/~aurel32/qemu/mipsel/](https://people.debian.org/~aurel32/qemu/mipsel/)
+Download the Router Firmware Infosect-Hardware-CTF-3-Firmware.tgz (or InfoSect-Hardware-CTF-3-Firmware-Golden.tgz). See the Discord pinned messages for links or grab a USB stick in the workshop.
+
+Download the QEMU images from [https://people.debian.org/~aurel32/qemu/mipsel/](https://people.debian.org/~aurel32/qemu/mipsel/) (or grab a USB stick).
 
 Then from Linux, install QEMU and run:
 
