@@ -4,9 +4,13 @@ This challenge will have you find and exploit bugs in a SOHO router.
 
 ## Flag 1 - Physical Access
 
-Gain physical access to the UART on the router and establish a serial console. Look around the filesystem for an obvious file containing the flag. Look at [https://infosectcbr.github.io/InfoSect-Hardware-CTF-1/](https://infosectcbr.github.io/InfoSect-Hardware-CTF-1/) Level 1 for details on using UART.
+Nb: If you do not have physical access to a real router, go onto the next section on emaulation.
 
-To connect the router to USB serial, connect GND on the router to GND on the serial bridge. TXO on the router to RX on the serial bridge. And RXO on the router to TX on the serial bridge. The router header pinout is as follows:
+Gain physical access to the UART on the router and establish a serial console. To do this, use a screw driver to pry off the case, and then pull out the circuit board. You can identify some header pins that will have UART access to give you a shell.
+
+Read this section to learn how to connect to UART or look at the previous hardware CTFs on UART https://infosectcbr.github.io/InfoSect-Hardware-CTF-1/](https://infosectcbr.github.io/InfoSect-Hardware-CTF-1/) Level 1.
+
+To connect the router to USB serial, connect GND on the router to GND on the serial bridge. TXO on the router to RX on the serial bridge. And RXO on the router to TX on the serial bridge. The router header pinout is as follows (and is also visible on the PCB silk screen. You might might need to use the camera on your phone and zoom in to take a magnified picture):
 
 ```
 XXX0
@@ -30,7 +34,11 @@ Run minicom:
 sudo minicom -D /dev/ttyUSB0
 ```
 
-Configure minicom by typing ctrl-a then z on its own. O to enter setup. Disable software and hardware flow control. The baud rate is 115200. Exit out of the configuration and hit enter a couple of times to have a shell!
+Configure minicom by typing ctrl-a then z on its own. O to enter setup. Disable software and hardware flow control. The baud rate is 115200. Exit out of the configuration and hit enter a couple of times to see your shell!
+
+Sometimes in UART you are presented with a root shell without needing to login. If you need to login, grab a password from the workshop hosts.
+
+Now you have a shell, look around the filesystem for an obvious file containing the flag.
 
 If you do not have a router in physical possession, you will need to emulate the firmware as described in the next section.
 
