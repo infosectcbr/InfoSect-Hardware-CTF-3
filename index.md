@@ -109,7 +109,7 @@ In your QEMU image, you have tools such as netcat (nc), telnet, python, bash, an
 
 There is a buffer overflow in the lighttpd custom webserver when it processes another HTTP header. The overflow overwrites an admin variable that needs to be set to a specific value for the flag to be revealed.
 
-You will need to copy the vsftpd-custom binary off the router to a laptop so you can analyse it. If you have physical access to the router, try copying it to a USB stick inserted into the router. Most routers will need to support the filesystem of the USB stick. If you look at /proc/filesystems on the router, you can see which filesystems it supports. You might need to use mkfs.vfat to create the filesystem if you are doing it on command line.
+You will need to copy the lighttpd-custom binary off the router to a laptop so you can analyse it. If you have physical access to the router, try copying it to a USB stick inserted into the router. Most routers will need to support the filesystem of the USB stick. If you look at /proc/filesystems on the router, you can see which filesystems it supports. You might need to use mkfs.vfat to create the filesystem if you are doing it on command line.
 
 You might want to look at the firmware in Ghidra and see if you can identify any functions that are named similar to do_buffer_overflow. Look at the code and the XREFS that use this function. You'll be able to figure out which HTTP header has the buffer overflow.
 
