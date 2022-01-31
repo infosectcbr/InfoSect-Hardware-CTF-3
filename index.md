@@ -1,6 +1,6 @@
 # Hardware CTF 3
 
-This challenge will have you find and exploit bugs in a SOHO router.
+This challenge will have you find and exploit bugs in a SOHO router. The router is a commercial-off-the-shelf device with cusotomised firmware to deliver the CTF-style challenges.
 
 ## Flag 1 - Physical Access
 
@@ -132,3 +132,7 @@ chroot ./root-ramips /usr/bin/vsftpd-custom
 ```
 
 Note that if you use an FTP client in your QEMU image, it won't be able to recognise the backoor commands since it is not part of the FTP specification. However, if you netcat or telnet to the FTP port, you can send raw commands to solve this challenge.
+
+## GPL Release
+
+As part of the GPL Copyright requirements, the source code modifications made to this router are available on request.
