@@ -57,8 +57,6 @@ You should see that lighttpd-custom is listening on 2 ports. One of these ports 
 
 ## Flag 3 - HTTP Headers
 
-At this point, submit exploits to the workshop hosts over discord. We'll throw the exploit on a real router to confirm you won the flag.
-
 You might have noticed some leaked lighttpd (HTTPd) source code on the system. It makes reference to a backdoor that has been inserted into the custom web server. To trigger the backdoor, you need to request /index.html from the server and use the correct HTTP header after the GET request. Look closely at the output of the webserver for the flag.
 
 ## Flag 4 - Buffer Overflow
