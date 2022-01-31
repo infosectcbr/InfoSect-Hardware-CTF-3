@@ -44,50 +44,6 @@ Now you have a shell, look around the filesystem for an obvious file containing 
 
 If you do not have a router in physical possession, you will need to emulate the firmware as described in the next section.
 
-### Firmware Emulation
-
-Download the Router Firmware Infosect-Hardware-CTF-3-Firmware.tgz (or InfoSect-Hardware-CTF-3-Firmware-Golden.tgz).
-
-Download the QEMU images from [https://people.debian.org/~aurel32/qemu/mipsel/].
-
-Then from Linux, install QEMU and run:
-
-```
-qemu-system-mipsel \ 
-  -M malta \ 
-  -kernel vmlinux-3.2.0-4-4kc-malta \ 
-  -hda debian_wheezy_mipsel_standard.qcow2 \ 
-  -append "root=/dev/sda1 console=tty0" \ 
-  -net nic \ 
-  -net user,hostfwd=tcp:127.0.0.1:7777-:22
-```
-
-You can add the -nographic option if you don't want to see QEMU in a GUI.
-
-The root password is 'root'. QEMU is doing port fowarding so we should be able to use local port 7777 to connect to our image. Confirm you can ssh into the QEMU image with
-```
-ssh -p 7777 root@localhost
-```
-
-scp the firmware from your computer to your QEMU image:
-
-```
-scp -P 7777 InfoSect-Hardware-CTF-3-Firmware.tgz root@localhost:
-```
-
-Now back in your ssh session, untar the firmware image in the /root (the default on login) directory.
-
-```
-tar xzvf InfoSect-Hardware-CTF-3-Firmware.tgz
-```
-
-Now run the HTTPd daemon in your ssh session.
-
-```
-chroot ./root-ramips /usr/bin/lighttpd-custom -f /lighttpd.conf
-```
-
-Now look in the ./root-ramips directories to find the FLAG file.
 
 ## Flag 2 - Ports Incoming
 
@@ -104,8 +60,6 @@ You should see that lighttpd-custom is listening on 2 ports. One of these ports 
 At this point, submit exploits to the workshop hosts over discord. We'll throw the exploit on a real router to confirm you won the flag.
 
 You might have noticed some leaked lighttpd (HTTPd) source code on the system. It makes reference to a backdoor that has been inserted into the custom web server. To trigger the backdoor, you need to request /index.html from the server and use the correct HTTP header after the GET request. Look closely at the output of the webserver for the flag.
-
-In your QEMU image, you have tools such as netcat (nc), telnet, python, bash, and wget available. These tools are enough to solve the challenge. It is recommended to use hand crafted HTTP GET requests for these challenges.
 
 ## Flag 4 - Buffer Overflow
 
@@ -126,14 +80,6 @@ Look for strings using Ghidra to identify USER and PASS, which are standard FTP 
 Another tip is to try downloading the vsftpd source code to see what the command parsing code looks like, and to identify any unusual changes.
 
 One final tip is to simply run the strings command on the binary and see if anything in the command strings looks suspicious.
-
-To emulate the vsftpd-custom binary, use:
-
-```
-chroot ./root-ramips /usr/bin/vsftpd-custom
-```
-
-Note that if you use an FTP client in your QEMU image, it won't be able to recognise the backoor commands since it is not part of the FTP specification. However, if you netcat or telnet to the FTP port, you can send raw commands to solve this challenge.
 
 ## GPL Release
 
