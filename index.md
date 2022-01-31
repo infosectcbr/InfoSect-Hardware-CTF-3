@@ -10,7 +10,7 @@ Solve each level to get the flag. Once you have the flag, enter it into the CTF 
 
 Gain physical access to the UART on the router and establish a serial console. To do this, use a screw driver to pry off the case, and then pull out the circuit board. You can identify some header pins that will have UART access to give you a shell.
 
-Read this section to learn how to connect to UART or look at the previous hardware CTFs on UART https://infosectcbr.github.io/InfoSect-Hardware-CTF-1/](https://infosectcbr.github.io/InfoSect-Hardware-CTF-1/) Level 1.
+Read this section to learn how to connect to UART or look at the previous hardware CTFs on UART https://infosectcbr.github.io/InfoSect-Hardware-CTF-1/] Level 1.
 
 To connect the router to USB serial, connect GND on the router to GND on the serial bridge. TXO on the router to RX on the serial bridge. And RXO on the router to TX on the serial bridge. The router header pinout is as follows (and is also visible on the PCB silk screen. You might might need to use the camera on your phone and zoom in to take a magnified picture):
 
