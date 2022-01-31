@@ -2,6 +2,10 @@
 
 This challenge will have you find and exploit bugs in a SOHO router. The router is a commercial-off-the-shelf device with cusotomised firmware to deliver the CTF-style challenges.
 
+Register your name/handle with InfoSect CTF to track your progress and compare yourself to others [http://ctf.infosectcbr.com.au:8000].
+
+Solve each level to get the flag. Once you have the flag, enter it into the CTF to get your points.
+
 ## Flag 1 - Physical Access
 
 Nb: If you do not have physical access to a real router, go onto the next section on emaulation.
@@ -44,9 +48,9 @@ If you do not have a router in physical possession, you will need to emulate the
 
 ### Firmware Emulation
 
-Download the Router Firmware Infosect-Hardware-CTF-3-Firmware.tgz (or InfoSect-Hardware-CTF-3-Firmware-Golden.tgz). See the Discord pinned messages for links or grab a USB stick in the workshop.
+Download the Router Firmware Infosect-Hardware-CTF-3-Firmware.tgz (or InfoSect-Hardware-CTF-3-Firmware-Golden.tgz).
 
-Download the QEMU images from [https://people.debian.org/~aurel32/qemu/mipsel/](https://people.debian.org/~aurel32/qemu/mipsel/) (or grab a USB stick).
+Download the QEMU images from [https://people.debian.org/~aurel32/qemu/mipsel/].
 
 Then from Linux, install QEMU and run:
 
