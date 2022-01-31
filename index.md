@@ -8,8 +8,6 @@ Solve each level to get the flag. Once you have the flag, enter it into the CTF 
 
 ## Flag 1 - Physical Access
 
-Nb: If you do not have physical access to a real router, go onto the next section on emaulation.
-
 Gain physical access to the UART on the router and establish a serial console. To do this, use a screw driver to pry off the case, and then pull out the circuit board. You can identify some header pins that will have UART access to give you a shell.
 
 Read this section to learn how to connect to UART or look at the previous hardware CTFs on UART https://infosectcbr.github.io/InfoSect-Hardware-CTF-1/](https://infosectcbr.github.io/InfoSect-Hardware-CTF-1/) Level 1.
