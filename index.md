@@ -38,12 +38,9 @@ sudo minicom -D /dev/ttyUSB0
 
 Configure minicom by typing ctrl-a then z on its own. O to enter setup. Disable software and hardware flow control. The baud rate is 115200. Exit out of the configuration and hit enter a couple of times to see your shell!
 
-Sometimes in UART you are presented with a root shell without needing to login. If you need to login, grab a password from the workshop hosts.
+Sometimes in UART you are presented with a root shell without needing to login.
 
 Now you have a shell, look around the filesystem for an obvious file containing the flag.
-
-If you do not have a router in physical possession, you will need to emulate the firmware as described in the next section.
-
 
 ## Flag 2 - Ports Incoming
 
